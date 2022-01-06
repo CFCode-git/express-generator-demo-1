@@ -7,8 +7,10 @@ module.exports.getAllUsers = async function () {
   return await User.list()
 };
 // eslint-disable-next-line func-names
-module.exports.addNewUser = async function (firstName, lastName, age) {
-  return await User.insert(firstName, lastName, age);
+module.exports.addNewUser = async function (name,age) {
+  return await User.insert({
+    name, age
+  });
 };
 
 module.exports.getUserById = async (userId) => {
@@ -17,6 +19,6 @@ module.exports.getUserById = async (userId) => {
 module.exports.createSubscription = async (userId, url) => {
   const user = await User.getOneById(userId);
   if (!user) throw Error('No such user!');
-  const sub = Subscription.insert(userId, url);
+  const sub = await Subscription.insert(userId, url);
   return sub;
 };

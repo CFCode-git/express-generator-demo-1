@@ -15,8 +15,8 @@ async function insert(user){
   return await UserModel.create(user)
 }
 
-async function getOneByName(firstName,lastName){
-  return UserModel.findOne({firstName,lastName})
+async function getOneByName(name){
+  return UserModel.findOne({name})
 }
 
 async function getOneById(id){
