@@ -6,10 +6,16 @@ const router = express.Router();
 const UserService = require('../services/user_services');
 /* GET users listing. */
 router.get('/', (req, res) => {
-  // res.locals.user = new User(req.query.firstName, req.query.lastName, req.query.age);
-  // res.render('user');
-  res.locals.users = UserService.getAllUsers();
-  res.render('users');
+  (async() => {
+    res.locals.users = await UserService.getAllUsers();
+    res.render('users');
+  })()
+    .then(r=>{
+      console.log(r)
+    })
+    .catch(e=>{
+      console.log(e)
+    })
 });
 /* POST users listing. */
 router.post('/', (req, res) => {
