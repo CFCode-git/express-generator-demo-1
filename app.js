@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
-
+const errorHandler = require('./middlewares/http_server_handler')
 require('./services/mongodb_connection')
 
 const indexRouter = require('./routes/index');
@@ -24,10 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-  next(createError(404));
-});
+app.use(errorHandler());
 
 // error handler
 app.use((err, req, res) => {
@@ -38,5 +35,8 @@ app.use((err, req, res) => {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// process.on('uncaughtException',err=>{})
+// process.on('unhandledRejection',(reason,p)=>{})
 
 module.exports = app;
