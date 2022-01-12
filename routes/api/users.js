@@ -2,15 +2,12 @@
 const express = require('express');
 
 const router = express.Router();
-// const User = require('../models/in_memo/user');
-const UserService = require('../services/user_services');
-const HTTPRequestParamError = require('../errors/http_request_param_error')
-
+const UserService = require('../../services/user_services');
+const apiRes = require('../../utils/api_response')
 
 /* GET users listing. */
 router.get('/', (req, res,next) => {
   (async() => {
-    // throw new HTTPRequestParamError('page','请指定页码','page can not be empty')
     res.locals.users = await UserService.getAllUsers();
   })()
     .then(r=>{
@@ -22,8 +19,8 @@ router.get('/', (req, res,next) => {
 });
 /* POST users listing. */
 router.post('/', (req, res) => {
-  const {firstName, lastName, age} = req.body;
-  const user = UserService.addNewUser(firstName, lastName, age);
+  const {name, age} = req.body;
+  const user = UserService.addNewUser(name, age);
   res.json(user);
 });
 

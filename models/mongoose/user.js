@@ -5,8 +5,6 @@ const Schema = mongoose.Schema
 const UserSchema = new Schema({
   name:{type:String,require:true,index:1},
   age:{type:Number,min:0,max:120},
-  firstName:{type:String,require:true},
-  lastName:{type:String,require:true},
 })
 
 const UserModel = mongoose.model('user',UserSchema)
@@ -15,12 +13,12 @@ async function insert(user){
   return await UserModel.create(user)
 }
 
-async function getOneByName(name){
-  return UserModel.findOne({name})
-}
-
 async function getOneById(id){
   return UserModel.findOne({_id: id})
+}
+
+async function getOneByName(name){
+  return UserModel.findOne({name})
 }
 
 async function list(params){
