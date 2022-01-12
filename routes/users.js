@@ -10,7 +10,7 @@ const HTTPRequestParamError = require('../errors/http_request_param_error')
 /* GET users listing. */
 router.get('/', (req, res,next) => {
   (async() => {
-    throw new HTTPRequestParamError('page','请指定页码','page can not be empty')
+    // throw new HTTPRequestParamError('page','请指定页码','page can not be empty')
     res.locals.users = await UserService.getAllUsers();
   })()
     .then(r=>{
