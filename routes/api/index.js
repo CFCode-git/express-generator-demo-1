@@ -5,13 +5,23 @@ const router = express.Router();
 const usersRouter = require('./users')
 const JWT = require('jsonwebtoken')
 
-const users = []
+const User = require('../../models/mongoose/user')
 
-router.get('/login',(req,res,next)=>{
-  const {username} = req.query
-  const user = {username, expireAt:Date.now().valueOf() + (20*60*1000)}
-  const token = JWT.sign(user,'adsfaosdfasdfasdf')
-  res.send(token)
+const crypto = require('crypto')
+const async = require('async')
+
+const pbkdf2Async = require('bluebird').promisify(crypto.pbkdf2) // promisify 的作用:把 nodejs 经典的 callback 类型写成 promise
+
+router.post('/login',(req,res,next)=>{
+  (async()=>{
+    const {username,password} = req.body;
+    const cipher = await pbkdf2Async(password,'adfasdfasdohlhlf',10000,512,'sha256')
+    const create = await User.insert({username,password:cipher})
+  })().then(r=>{
+
+  }).catch(e=>{
+
+  })
 })
 
 router.get('/hello',(req,res,next)=>{
