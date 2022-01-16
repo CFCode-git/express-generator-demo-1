@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const cookieSession = require('cookie-session')
+const session = require('express-session')
 const createError = require('http-errors');
 const logger = require('./utils/loggers/logger');
 const errorHandler = require('./middlewares/http_server_handler')
@@ -21,13 +21,15 @@ app.set('view engine', 'ejs');
 // app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cookieSession({
-  name:'demo_session',
-  keys:['laskdjhfaslkdjfhalskdhjf'],
-  maxAge:86400
+let id = 0
+app.use(session({
+  name:'express_demo',
+  secret:'asfadsfasfvnnjggjtj',
+  resave:false,
+  saveUninitialized:true,
 }))
 
 app.use('/api', apiRouter);
