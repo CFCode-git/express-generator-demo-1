@@ -1,4 +1,9 @@
+# cipher stuff, do not commit it to a public repo
+/cipher/
+
+/.history/
 /.idea/
+/.vscode/
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
 # Logs
